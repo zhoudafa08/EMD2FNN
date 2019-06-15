@@ -236,9 +236,13 @@ def construct_datasets_scrolling(file_Feats, file_Labels):
     X = np.loadtxt(open(file_Feats, 'rb'), delimiter=',', skiprows=0)
     Y = np.loadtxt(open(file_Labels, 'rb'), delimiter=',', skiprows=0)
     
-    
     sample_num = X.shape[0]
-    output_len = Y.shape[1]
+    try:
+        output_len = Y.shape[1]
+    except IndexError:
+        Y = Y.reshape(Y.shape[0], 1)
+        output_len = Y.shape[1]
+        
 
     min_data = np.min(X)
     max_data = np.max(X)
@@ -267,10 +271,10 @@ if __name__ == "__main__":
     np.random.seed(0)
     
     # set the file's directory and its name
-    file_name = './data/lod_imf.csv'
+    file_name = './data/NASDAQ_imf.csv'
     
-    #file_Feats = './data/lod_Feats.csv'
-    #file_Labels = './data/lod_Feats.csv'
+    #file_Feats = './data/NASDAQ_Feats.csv'
+    #file_Labels = './data/NASDAQ_Labels.csv'
     
     # set the predicion length
     output_len = 1
